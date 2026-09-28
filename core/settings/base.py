@@ -1,15 +1,17 @@
+
 import os
 from pathlib import Path
+from datetime import timedelta
+
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
-<<<<<<< HEAD
-from datetime import timedelta
 from celery.schedules import crontab
-=======
->>>>>>> 12b55f2d08036b04e3e3a7a0a069b92c45a704d9
+
 from core.settings.jazzmin import JAZZMIN_SETTINGS
 
+
 load_dotenv()
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -17,10 +19,16 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 IS_PRODUCTION = os.getenv("PRODUCTION", "False").lower() == "true"
 
+
 if IS_PRODUCTION:
     from core.settings.production import *
 else:
     from core.settings.development import *
+
+
+# =========================
+# APPS
+# =========================
 
 THEME_APPS = [
     'jazzmin',
@@ -37,10 +45,6 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-=======
-    'rest_framework', 
->>>>>>> 12b55f2d08036b04e3e3a7a0a069b92c45a704d9
 ]
 
 LIBRARY_APPS = [
@@ -48,7 +52,7 @@ LIBRARY_APPS = [
     'drf_yasg',
     'django_ckeditor_5',
     'modeltranslation',
-    "corsheaders",
+    'corsheaders',
 ]
 
 INSTALLED_APPS = [
@@ -57,6 +61,11 @@ INSTALLED_APPS = [
     *LIBRARY_APPS,
     *MY_APPS,
 ]
+
+
+# =========================
+# MIDDLEWARE
+# =========================
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -71,7 +80,19 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
 ]
 
+
+# =========================
+# URL / WSGI
+# =========================
+
 ROOT_URLCONF = 'core.urls'
+
+WSGI_APPLICATION = 'core.wsgi.application'
+
+
+# =========================
+# TEMPLATES
+# =========================
 
 TEMPLATES = [
     {
@@ -88,9 +109,10 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
 
-
+# =========================
+# PASSWORD VALIDATION
+# =========================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -107,6 +129,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# =========================
+# LANGUAGE / TIME
+# =========================
 
 LANGUAGE_CODE = 'ru'
 
@@ -126,15 +152,30 @@ LANGUAGES = [
 ]
 
 
+# =========================
+# MODELTRANSLATION
+# =========================
+
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
+
 MODELTRANSLATION_CUSTOM_FIELDS = ('CKEditor5Field',)
 
 
+# =========================
+# MEDIA
+# =========================
+
 MEDIA_URL = '/back_media/'
+
 MEDIA_ROOT = BASE_DIR / 'back_media/'
 
 
+# =========================
+# STATIC
+# =========================
+
 STATIC_URL = '/back_static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'back_static')
 
 
@@ -148,107 +189,213 @@ STORAGES = {
 }
 
 
+# =========================
+# CKEDITOR
+# =========================
+
 CKEDITOR_5_CONFIGS = {
     'extends': {
         'blockToolbar': [
-            'paragraph', 'heading1', 'heading2', 'heading3', 
-            '|', 'bulletedList', 'numberedList', 'alignment'
+            'paragraph',
+            'heading1',
+            'heading2',
+            'heading3',
+            '|',
+            'bulletedList',
+            'numberedList',
+            'alignment'
         ],
+
         'toolbar': [
-            'heading', '|', 
-            'bold', 'italic', 'underline', 'strikethrough', 'code', '|',
-            'fontSize', 'fontColor', 'fontBackgroundColor', '|',
-            'link', 'imageUpload', 'mediaEmbed', 'insertTable', 'blockQuote', '|',
-            'alignment', 'outdent', 'indent', '|',
-            'sourceEditing', 'removeFormat'
+            'heading',
+            '|',
+            'bold',
+            'italic',
+            'underline',
+            'strikethrough',
+            'code',
+            '|',
+            'fontSize',
+            'fontColor',
+            'fontBackgroundColor',
+            '|',
+            'link',
+            'imageUpload',
+            'mediaEmbed',
+            'insertTable',
+            'blockQuote',
+            '|',
+            'alignment',
+            'outdent',
+            'indent',
+            '|',
+            'sourceEditing',
+            'removeFormat'
         ],
+
         'upload_url': '/ckeditor5/image_upload/',
+
         'heading': {
             'options': [
-                { 'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph' },
-                { 'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1' },
-                { 'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2' },
-                { 'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3' }
+                {
+                    'model': 'paragraph',
+                    'title': 'Paragraph',
+                    'class': 'ck-heading_paragraph'
+                },
+                {
+                    'model': 'heading1',
+                    'view': 'h1',
+                    'title': 'Heading 1',
+                    'class': 'ck-heading_heading1'
+                },
+                {
+                    'model': 'heading2',
+                    'view': 'h2',
+                    'title': 'Heading 2',
+                    'class': 'ck-heading_heading2'
+                },
+                {
+                    'model': 'heading3',
+                    'view': 'h3',
+                    'title': 'Heading 3',
+                    'class': 'ck-heading_heading3'
+                }
             ]
         },
+
         'table': {
             'contentToolbar': [
-                'tableColumn', 'tableRow', 'mergeTableCells', 
-                'tableProperties', 'tableCellProperties'
+                'tableColumn',
+                'tableRow',
+                'mergeTableCells',
+                'tableProperties',
+                'tableCellProperties'
             ]
         },
+
         'image': {
             'toolbar': [
-                'imageTextAlternative', '|', 
-                'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight', '|',
-                'imageStyle:full', 'imageStyle:side'
+                'imageTextAlternative',
+                '|',
+                'imageStyle:alignLeft',
+                'imageStyle:alignCenter',
+                'imageStyle:alignRight',
+                '|',
+                'imageStyle:full',
+                'imageStyle:side'
             ]
         }
     },
+
     'minimal': {
-        'toolbar': ['bold', 'italic', 'link'],
+        'toolbar': [
+            'bold',
+            'italic',
+            'link'
+        ],
     },
-<<<<<<< HEAD
 }
 
 
+# =========================
+# CUSTOM USER
+# =========================
+
 AUTH_USER_MODEL = "testapp.CustomUser"
 
-# 1. Указываем DRF использовать JWT как основной способ авторизации
+
+# =========================
+# DRF
+# =========================
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
 
-# 2. Настройки SimpleJWT (указываем lifetimes и поле email)
+
+# =========================
+# SIMPLE JWT
+# =========================
+
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Токен живёт 1 час
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Рефреш живёт 1 день
-    'AUTH_HEADER_TYPES': ('Bearer',),                # В заголовке пишем Bearer <token>
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('Bearer',),
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
 }
 
+
+# =========================
+# GOOGLE OAUTH
+# =========================
+
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+
 GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI")
 
-# --- REDIS CACHE (Используем DB 1) ---
+
+# =========================
+# REDIS CACHE
+# =========================
+
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": os.getenv("REDIS_URL", "redis://127.0.0.1:6379/1"),
+        "LOCATION": os.getenv(
+            "REDIS_URL",
+            "redis://127.0.0.1:6379/1"
+        ),
     }
 }
 
 
-# Где лежат очереди задач (Redis как Broker)
-CELERY_BROKER_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/0")
+# =========================
+# CELERY
+# =========================
 
-# Где сохранять результаты выполнения (Redis как Result Backend)
-CELERY_RESULT_BACKEND = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/0")
+CELERY_BROKER_URL = os.getenv(
+    "REDIS_URL",
+    "redis://127.0.0.1:6379/0"
+)
 
-# Формат передачи данных (JSON — стандарт)
+CELERY_RESULT_BACKEND = os.getenv(
+    "REDIS_URL",
+    "redis://127.0.0.1:6379/0"
+)
+
 CELERY_ACCEPT_CONTENT = ['json']
+
 CELERY_TASK_SERIALIZER = 'json'
+
 CELERY_RESULT_SERIALIZER = 'json'
+
 CELERY_TIMEZONE = 'Asia/Bishkek'
 
 
+# =========================
+# CELERY BEAT
+# =========================
+
 CELERY_BEAT_SCHEDULE = {
-    # Задача 1: Запускается каждые 5 минут
+
+    # Каждые 5 минут
     'run-stats-every-5-minutes': {
         'task': 'apps.testapp.tasks.monthly_user_stats_task',
-        'schedule': 300.0, # Каждые 300 секунд
+        'schedule': 300.0,
     },
-    
-    # Задача 2: Запускается каждый день в 00:00 (Полезно для рассылок/отчетов)
+
+    # Каждый день в 00:00
     'run-daily-midnight-task': {
         'task': 'apps.testapp.tasks.monthly_user_stats_task',
-        'schedule': crontab(hour=0, minute=0),
+        'schedule': crontab(
+            hour=0,
+            minute=0
+        ),
     },
 }
-=======
-}
->>>>>>> 12b55f2d08036b04e3e3a7a0a069b92c45a704d9
+

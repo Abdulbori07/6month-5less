@@ -1,79 +1,87 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-<<<<<<< HEAD
-from apps.testapp.models import CustomUser
+from .models import CustomUser
 
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    model = CustomUser
-    list_display = ("email", "username", "role", "is_staff", "is_active")
-    list_filter = ("role", "is_staff", "is_active")
-    search_fields = ("email", "username", "phone")
-    ordering = ("-id",)
+
+    list_display = (
+        'email',
+        'username',
+        'role',
+        'is_verified',
+        'is_staff',
+        'is_active',
+    )
+
+    list_filter = (
+        'role',
+        'is_verified',
+        'is_staff',
+        'is_superuser',
+        'is_active',
+    )
+
+    search_fields = (
+        'email',
+        'username',
+    )
+
+    ordering = (
+        'email',
+    )
 
     fieldsets = (
-        (None, {"fields": ("email", "password")}),
-        ("Личная информация", {"fields": ("username", "phone", "avatar")}),
-        (
-            "Права доступа",
-            {
-                "fields": (
-                    "role",
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                    "groups",
-                    "user_permissions",
-                )
-            },
-        ),
-        ("Важные даты", {"fields": ("last_login", "date_joined")}),
+        (None, {
+            'fields': (
+                'email',
+                'password',
+            )
+        }),
+
+        ('Личная информация', {
+            'fields': (
+                'username',
+                'first_name',
+                'last_name',
+                'bio',
+                'birth_date',
+            )
+        }),
+
+        ('Права доступа', {
+            'fields': (
+                'role',
+                'is_verified',
+                'is_active',
+                'is_staff',
+                'is_superuser',
+                'groups',
+                'user_permissions',
+            )
+        }),
+
+        ('Важные даты', {
+            'fields': (
+                'last_login',
+                'date_joined',
+            )
+        }),
     )
 
     add_fieldsets = (
-        (
-            None,
-            {
-                "classes": ("wide",),
-                "fields": (
-                    "email",
-                    "password1",
-                    "password2",
-                    "role",
-                    "is_staff",
-                    "is_active",
-                ),
-            },
-        ),
-    )
-=======
-from django.utils.translation import gettext_lazy as _
-from .models import CustomUser
-
-@admin.register(CustomUser)
-class CustomUserAdmin(UserAdmin):
-    
-    list_display = ('email', 'role', 'is_verified', 'is_active')
-    
-    list_filter = ('role', 'is_verified', 'is_staff', 'is_superuser', 'is_active')
-    
-    search_fields = ('email', 'username')
-    
-    ordering = ('email',)
-
-    fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'username', 'bio', 'birth_date')}),
-        (_('Permissions'), {'fields': ('role', 'is_verified', 'is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-    )
-
-    # Настройка формы создания нового пользователя через админку
-    add_fieldsets = UserAdmin.add_fieldsets + (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'role', 'is_verified', 'bio', 'birth_date'),
+            'fields': (
+                'username',
+                'email',
+                'password1',
+                'password2',
+                'role',
+                'is_verified',
+                'is_staff',
+                'is_active',
+            ),
         }),
-    ) 
->>>>>>> 12b55f2d08036b04e3e3a7a0a069b92c45a704d9
+    )
